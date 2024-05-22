@@ -27,6 +27,9 @@ jobs:
       run: |
         echo "$CLASP_CREDENTIALS" > ./.clasprc.json
 
+    - name: Set up clasp project
+      run: clasp clone ${{ secrets.SCRIPT_ID }}
+
     - name: Push to Google Apps Script
       run: clasp push
 
