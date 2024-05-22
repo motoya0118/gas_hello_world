@@ -22,12 +22,10 @@ jobs:
       run: npm install -g @google/clasp
 
     - name: Authenticate clasp
-
       env:
         CLASP_CREDENTIALS: ${{ secrets.CLASP_CREDENTIALS }}
       run: |
-        echo "$CLASP_CREDENTIALS" > ./credentials.json
-        clasp login --creds ./credentials.json
+        echo "$CLASP_CREDENTIALS" > ./.clasprc.json
 
     - name: Set up clasp project
       run: clasp clone ${{ secrets.SCRIPT_ID }}
@@ -36,5 +34,4 @@ jobs:
       run: clasp push
 
     - name: Deploy Google Apps Script
-
       run: clasp deploy
