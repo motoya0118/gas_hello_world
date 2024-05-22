@@ -23,15 +23,18 @@ jobs:
 
     - name: Authenticate clasp
 
+      env:
+        CLASP_CREDENTIALS: ${{ secrets.CLASP_CREDENTIALS }}
       run: |
-        echo "${{ secrets.CLASP_CREDENTIALS }}" > ~/.clasprc.json
+        echo "$CLASP_CREDENTIALS" > ./credentials.json
+        clasp login --creds ./credentials.json
 
     - name: Set up clasp project
-      run: |
-        clasp clone ${{ secrets.SCRIPT_ID }} || echo "Project already cloned."
+      run: clasp clone ${{ secrets.SCRIPT_ID }}
 
     - name: Push to Google Apps Script
       run: clasp push
 
     - name: Deploy Google Apps Script
+
       run: clasp deploy
